@@ -1,0 +1,20 @@
+{
+  "name": "DatabaseGit",
+  "version": "1.0.0",
+  "description": "For storing a database:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aishtiaq7/VibecheckBatabaseNPM.git"
+  },
+  "keywords": [],
+  "author": "Awshaf Ishtiaque",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aishtiaq7/VibecheckBatabaseNPM/issues"
+  },
+  "homepage": "https://github.com/aishtiaq7/VibecheckBatabaseNPM#readme"
+}
