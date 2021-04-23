@@ -1,9 +1,10 @@
 {
-  "name": "DatabaseGit",
+  "name": "Databasegit",
   "version": "1.0.0",
   "description": "For storing a database:",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/aishtiaq7/VibecheckBatabaseNPM/issues"
   },
-  "homepage": "https://github.com/aishtiaq7/VibecheckBatabaseNPM#readme"
+  "homepage": "https://github.com/aishtiaq7/VibecheckBatabaseNPM#readme",
+  "dependencies": {
+    "firebase": "^8.4.1",
+    "firebase-admin": "^9.6.0",
+    "firebase-util": "^0.2.5",
+    "require": "^2.4.20"
+  }
 }
