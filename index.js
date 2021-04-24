@@ -26,21 +26,15 @@ Read
 
 */
 
-/*
-"VibinScores": [
-        {
-            "viberId": "425904090208534528",
-            "person": {
-                "name": "robi",
-                "score": 0,
-                "id": "425904090208534528"
-            },
-            "vibinScore": 0,
-            "timeOfEntry": "2021-04-19T16:59:23.077Z"
-        }
-    ],
-*/
 
+
+
+
+
+/* **********************************************************
+                            Write
+    **********************************************************
+*/ 
 var vibinEntry = {
     "viberId": "425904090208534528",
     "person": {
@@ -52,30 +46,29 @@ var vibinEntry = {
     "timeOfEntry": "2021-04-19T16:59:23.077Z"
 }
 
-
-/*
-    Write
-*/
-
-
-registerVibinScores('vibinScores/allEntries', 235, vibinEntry);
-
+//registerVibinScores('vibinScores/allEntries', 996, vibinEntry);
 
 /*
     Writes 'dataToWrite' json object to your 'reference' under 'childId' node. 
 
+    Pattern example: 
+    vibinScores{ // <---- reference
+            allEntries{
+                //VIBIN-ID 237{ <---- childID
+                    ...
+                    ..obj   <---- dataToWrite
+                }
+            }
+    }
 */
 function registerVibinScores( reference, childId, dataToWrite){
 
-    //convertes arguments to string if not string
+    //convertes reference to string if not string
     if((typeof reference) != 'string'){
         reference = reference.toString();
     }
 
     var ref = db.ref(reference); //vibinScores
-
-    // var usersRef = ref.child(childId);  //vibinScores/6969
-
     usersRef = ref.child(childId);
     usersRef.set(
         dataToWrite
@@ -83,37 +76,31 @@ function registerVibinScores( reference, childId, dataToWrite){
 
 }
 
-//UPDATE-----------
-// var hopperRef = usersRef.child("something1");
-// hopperRef.update({
-//   "full_name": "JAAAASON"
-// });
+
+/* **********************************************************
+                            READ
+    **********************************************************
+*/ 
+// - /vibinScores/allEntries/112/
+var promise = readData('vibinScores');
+promise.then( dataReceived => {
+    console.log(dataReceived);
+    })
 
 
-//
-// firebase.database().ref.set('vibinScores/').set({
-//     NEWWWSTUFF: "June 23, 1912",
-//     FUCKNEW: "Alan Turing"
-//   });
+function readData (path){
+    var ref = db.ref(path); 
 
-
-
-
-
-// var logs = ReadData('newSet/');
-// console.log();
-
-function ReadData (id){
-    var result;
-    var ref = firebase.database().ref(`${id}`);
-        ref.on("value", snapshot =>{
-            result= snapshot.val();
-        }, err =>{
-            throw new error('Error Reading file');
-        });
-
-    return result;
-
+    return ref.once("value", function(snapshot) {
+            console.log(snapshot.val());
+            return snapshot.val();
+        }, function (errorObject) {
+            console.log("The read failed: " + errorObject.code);
+        })
+        .then( snap =>{
+            console.log('\n\n\n')
+            return snap.val();
+        })
 }
 
 
