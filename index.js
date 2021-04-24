@@ -58,7 +58,7 @@ var vibinEntry = {
 */
 
 
-registerVibinScores('vibinScores', 999, vibinEntry);
+registerVibinScores('vibinScores/allEntries', 235, vibinEntry);
 
 
 /*
@@ -68,22 +68,18 @@ registerVibinScores('vibinScores', 999, vibinEntry);
 function registerVibinScores( reference, childId, dataToWrite){
 
     //convertes arguments to string if not string
-    console.log(typeof reference);
     if((typeof reference) != 'string'){
         reference = reference.toString();
     }
-    // if((typeof childId) != 'string'){
-    //     childId = childId.toString();
-    // }
 
     var ref = db.ref(reference); //vibinScores
 
-    var usersRef = ref.child(childId);  //vibinScores/6969
+    // var usersRef = ref.child(childId);  //vibinScores/6969
 
-    usersRef = ref.push();
-    usersRef.set({
-        childId:dataToWrite
-    });
+    usersRef = ref.child(childId);
+    usersRef.set(
+        dataToWrite
+    );
 
 }
 
