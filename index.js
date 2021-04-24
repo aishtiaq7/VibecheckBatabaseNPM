@@ -17,31 +17,84 @@ firebase.initializeApp(firebaseConfig);
 //*************************************** */
 
 var db = firebase.database();
-// var ref = db.ref("/user_data");  //Set the current directory you are working in
 
-var ref = db.ref("vibinScores");
 
-// var usersRef = ref.child("users");
 /*
-var usersRef = ref.child("something");
-usersRef.set({
-  something1: {
-    date_of_birth: "June 23, 1912",
-    full_name: "Alan Turing"
-  },
-  something2: {
-    date_of_birth: "December 9, 1906",
-    full_name: "Grace Hopper"
-  }
-});
+Write   => set, update, push
+Update 
+Read
+
 */
 
-//UPDATE-----------
-var hopperRef = usersRef.child("users/something1/");
-hopperRef.update({
-  "full_name": "Awshaf name"
-});
+/*
+"VibinScores": [
+        {
+            "viberId": "425904090208534528",
+            "person": {
+                "name": "robi",
+                "score": 0,
+                "id": "425904090208534528"
+            },
+            "vibinScore": 0,
+            "timeOfEntry": "2021-04-19T16:59:23.077Z"
+        }
+    ],
+*/
 
+var vibinEntry = {
+    "viberId": "425904090208534528",
+    "person": {
+        "name": "kukur",
+        "score": 0,
+        "id": "425904090208534528"
+    },
+    "vibinScore": 0,
+    "timeOfEntry": "2021-04-19T16:59:23.077Z"
+}
+
+
+/*
+    Write
+*/
+
+
+registerVibinScores('vibinScores', 999, vibinEntry);
+
+
+/*
+    Writes 'dataToWrite' json object to your 'reference' under 'childId' node. 
+
+*/
+function registerVibinScores( reference, childId, dataToWrite){
+
+    //convertes arguments to string if not string
+    console.log(typeof reference);
+    if((typeof reference) != 'string'){
+        reference = reference.toString();
+    }
+    // if((typeof childId) != 'string'){
+    //     childId = childId.toString();
+    // }
+
+    var ref = db.ref(reference); //vibinScores
+
+    var usersRef = ref.child(childId);  //vibinScores/6969
+
+    usersRef = ref.push();
+    usersRef.set({
+        childId:dataToWrite
+    });
+
+}
+
+//UPDATE-----------
+// var hopperRef = usersRef.child("something1");
+// hopperRef.update({
+//   "full_name": "JAAAASON"
+// });
+
+
+//
 // firebase.database().ref.set('vibinScores/').set({
 //     NEWWWSTUFF: "June 23, 1912",
 //     FUCKNEW: "Alan Turing"
