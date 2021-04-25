@@ -82,9 +82,19 @@ function registerVibinScores( reference, childId, dataToWrite){
     **********************************************************
 */ 
 // - /vibinScores/allEntries/112/
-var promise = readData('vibinScores');
+var promise = readData('vibinScores/allEntries');
 promise.then( dataReceived => {
+    console.log('\n-----promise call returned:\n');
     console.log(dataReceived);
+    return dataReceived;
+    })
+    .then( data =>{
+        for (let [key, value] of Object.entries(data)) {
+            console.log(`key: value`);
+            console.log(key);
+            console.log(value);
+
+        }
     })
 
 
@@ -92,13 +102,13 @@ function readData (path){
     var ref = db.ref(path); 
 
     return ref.once("value", function(snapshot) {
-            console.log(snapshot.val());
+            // console.log('\n-----fetched data:\n');
+            // console.log(snapshot.val());
             return snapshot.val();
         }, function (errorObject) {
             console.log("The read failed: " + errorObject.code);
         })
         .then( snap =>{
-            console.log('\n\n\n')
             return snap.val();
         })
 }
