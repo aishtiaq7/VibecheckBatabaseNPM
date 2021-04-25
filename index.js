@@ -19,12 +19,6 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.database();
 
 
-/*
-Write   => set, update, push
-Update 
-Read
-
-*/
 
 
 
@@ -81,37 +75,74 @@ function registerVibinScores( reference, childId, dataToWrite){
                             READ
     **********************************************************
 */ 
-// - /vibinScores/allEntries/112/
+/*
+    Reads data asynchronously with the 'path' argument specified. 
+    RETURNING A PROMISE.
+    
+    Ex path can be: /vibinScores/allEntries/112/
+*/
+function readData (path){
+    var ref = db.ref(path); 
+
+    return ref.once("value", function(snapshot) {
+        // console.log('\n-----fetched data:\n');
+        // console.log(snapshot.val());
+        console.log('\tReading: '+path);
+        return snapshot.val();
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    })
+    .then( snap =>{
+            return snap.val();
+        })
+}
 var promise = readData('vibinScores/allEntries');
 promise.then( dataReceived => {
     console.log('\n-----promise call returned:\n');
     console.log(dataReceived);
     return dataReceived;
     })
-    .then( data =>{
-        for (let [key, value] of Object.entries(data)) {
-            console.log(`key: value`);
-            console.log(key);
-            console.log(value);
+    // .then( data =>{
+    //     for (let [key, value] of Object.entries(data)) {
+    //         console.log(`key: value`);
+    //         console.log(key);
+    //         console.log(value);
 
-        }
-    })
+    //     }
+    // })
 
-
-function readData (path){
-    var ref = db.ref(path); 
-
-    return ref.once("value", function(snapshot) {
-            // console.log('\n-----fetched data:\n');
-            // console.log(snapshot.val());
-            return snapshot.val();
-        }, function (errorObject) {
-            console.log("The read failed: " + errorObject.code);
-        })
-        .then( snap =>{
-            return snap.val();
-        })
+/* **********************************************************
+                            UPDATE
+    **********************************************************
+*/ 
+var newObject = {
+    "viberId": "--------------",
+    "person": {
+        "name": "|||||GALI HERE|||||||",
+        "score": 0,
+        "id": "1111111111111"
+    },
+    "vibinScore": 0,
+    "timeOfEntry": "2021-04-19T16:59:23.077Z"
 }
+
+var path = 'vibinScores/allEntries/112';
+updateNode(path,newObject );
+
+function updateNode(path, newObject){
+
+    console.log(`updating path: ${path}`)
+    firebase.database().ref(path).set(
+        newObject
+    );
+}
+
+readData(path);
+
+
+
+
+
 
 
 console.log('ready to mingle');
